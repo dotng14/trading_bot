@@ -1,7 +1,13 @@
 import React from 'react';
 
+interface Stock {
+  name: string;
+  price: number;
+  change: number;
+}
+
 interface StockListProps {
-  stocks: string[];
+  stocks: Stock[];
 }
 
 const StockList: React.FC<StockListProps> = ({ stocks }) => {
@@ -11,10 +17,12 @@ const StockList: React.FC<StockListProps> = ({ stocks }) => {
       <ul>
         {stocks.map((stock, index) => (
           <li key={index}>
-            {stock}
-            <button onClick={() => alert(`More details about ${stock}`)}>More Detail</button>
-            <button onClick={() => alert(`Trading ${stock}`)}>Trade This</button>
-            <button onClick={() => alert(`Stopped trading ${stock}`)}>Stop Trade This</button>
+            <div>
+              <strong>{stock.name}</strong> - ${stock.price.toFixed(2)} ({stock.change.toFixed(2)}%)
+            </div>
+            <button onClick={() => alert(`More details about ${stock.name}`)}>More Detail</button>
+            <button onClick={() => alert(`Trading ${stock.name}`)}>Trade This</button>
+            <button onClick={() => alert(`Stopped trading ${stock.name}`)}>Stop Trade This</button>
           </li>
         ))}
       </ul>
