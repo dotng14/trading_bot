@@ -1,13 +1,8 @@
 import StockList, { Stock } from './StockList';
+import React from 'react';
 
 function Home() {
-  const stocks: Stock[] = [
-    { name: 'AAPL', isTrading: true},
-    { name: 'GOOGL', isTrading: true},
-    { name: 'AMZN' , isTrading: true},
-    { name: 'MSFT', isTrading: false},
-    { name: 'TSLA', isTrading: false},
-  ];
+
 
   return (
     <div className="app-container">
