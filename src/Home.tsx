@@ -1,10 +1,10 @@
 import StockList, { Stock } from './StockList';
 
-function App() {
+function Home() {
   const stocks: Stock[] = [
     { name: 'AAPL', isTrading: true},
-    { name: 'GOOGL', isTrading: false},
-    { name: 'AMZN' , isTrading: false},
+    { name: 'GOOGL', isTrading: true},
+    { name: 'AMZN' , isTrading: true},
     { name: 'MSFT', isTrading: false},
     { name: 'TSLA', isTrading: false},
   ];
@@ -22,4 +22,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;

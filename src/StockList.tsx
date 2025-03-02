@@ -18,6 +18,7 @@ const StockList: React.FC<StockListProps> = ({ stocks }) => {
       i === index ? { ...stock, isTrading: !stock.isTrading } : stock
     );
     setStockList(updatedStocks);
+    console.log(updatedStocks); // Log the updated state
   };
 
   return (
