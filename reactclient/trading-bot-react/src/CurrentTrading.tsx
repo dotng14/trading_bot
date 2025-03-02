@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stock } from './StockList';
+import { Stock } from '../../../StockList';
 
 interface CurrentTradingProps {
   stocks: Stock[];

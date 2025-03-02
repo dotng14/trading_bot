@@ -1,8 +1,11 @@
-import StockList, { Stock } from './StockList';
-import React from 'react';
+import StockList from './StockList';
 
 function Home() {
-
+  const stocks = [
+    {name: 'AAPL', price: 100, quantity: 10},
+    {name: 'GOOGL', price: 2000, quantity: 5},
+    {name: 'TSLA', price: 500, quantity: 2}
+  ]
 
   return (
     <div className="app-container">
