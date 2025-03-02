@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import CurrentTrading from './CurrentTrading';
 
-interface Stock {
+export interface Stock {
   name: string;
-  price: number;
-  change: number;
+  isTrading?: boolean;
 }
 
 interface StockListProps {
@@ -11,21 +11,32 @@ interface StockListProps {
 }
 
 const StockList: React.FC<StockListProps> = ({ stocks }) => {
+  const [stockList, setStockList] = useState(stocks);
+
+  const toggleTrading = (index: number) => {
+    const updatedStocks = stockList.map((stock, i) => 
+      i === index ? { ...stock, isTrading: !stock.isTrading } : stock
+    );
+    setStockList(updatedStocks);
+  };
+
   return (
     <div className="stock-list">
       <h2>Stock List</h2>
       <ul>
-        {stocks.map((stock, index) => (
+        {stockList.map((stock, index) => (
           <li key={index}>
             <div>
-              <strong>{stock.name}</strong> - ${stock.price.toFixed(2)} ({stock.change.toFixed(2)}%)
+              <strong>{stock.name}</strong> 
             </div>
             <button onClick={() => alert(`More details about ${stock.name}`)}>More Detail</button>
-            <button onClick={() => alert(`Trading ${stock.name}`)}>Trade This</button>
-            <button onClick={() => alert(`Stopped trading ${stock.name}`)}>Stop Trade This</button>
+            <button onClick={() => toggleTrading(index)}>
+              {stock.isTrading ? 'Stop Trade This' : 'Trade This'}
+            </button>
           </li>
         ))}
       </ul>
+      <CurrentTrading stocks={stockList} />
     </div>
   );
 };
