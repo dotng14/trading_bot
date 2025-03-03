@@ -16,6 +16,26 @@ const LogIn: React.FC = () => {
 
     if (data.success) {
       alert('Logged in successfully');
+    } else if (data.message.includes('challenge')) {
+      // Handle 2FA challenge
+      const code = prompt('Enter 2FA code');
+      if (code) {
+        const challenge_id = data.challenge_id;
+        const response = await fetch('http://127.0.0.1:5000/auth', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username, password, challenge_id, code }),
+        });
+        const mfaData = await response.json();
+
+        if (mfaData.success) {
+          alert('Logged in successfully');
+        } else {
+          alert(mfaData.message);
+        }
+      }
     } else {
       alert(data.message);
     }
