@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
 from log_in import login_robinhood
-
+import logging
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/api")
 def api():
@@ -9,6 +11,7 @@ def api():
 
 @app.route('/login', methods=['POST'])
 def login():
+
     data = request.json
     username = data.get('username')
     password = data.get('password')
