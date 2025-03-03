@@ -26,5 +26,5 @@ if __name__ == '__main__':
     password = args[1];
     login_robinhood(username, password)
 
-    get.get_stock_data_and_save_to_json("AAPL")
-    plot.get_historical_stock_data(["AAPL"])
+    get.get_stock_data_and_save_to_json("MSFT")
+    plot.get_historical_stock_data(["MSFT"])
