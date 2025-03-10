@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stock } from '../../../StockList';
+import { Stock } from './StockList';
 
 interface CurrentTradingProps {
   stocks: Stock[];
@@ -14,7 +14,7 @@ const CurrentTrading: React.FC<CurrentTradingProps> = ({ stocks }) => {
       <ul>
         {tradingStocks.map((stock, index) => (
           <li key={index}>
-            <strong>{stock.name}</strong>
+            <strong>{stock.ticker}</strong>
           </li>
         ))}
       </ul>

@@ -24,29 +24,25 @@ def login():
     username = data.get('username')
     password = data.get('password')
 
-    logging.debug(f"Username: {username}")
-    logging.debug(f"Password: {password}")
-
     if(login_robinhood(username, password)):
         return jsonify({'success': True, 'message': 'Login successful'})
     else:
         return jsonify({'success': False, 'message': 'Login failed'})
 
-@app.route("/basic_data", methods=['POST'])
-def basic_data():
-    logging.debug("Received basic data request")
-    data = request.json
-    ticker = data.get('name')
-    data = get_data.get_basic_data(ticker)
-    logging.debug(data)
-    return jsonify({'price': time.time(), 'day_change': data[1]})
-
 @app.route("/stock_list", methods=['GET'])
 def stock_list():
     logging.debug("Received stock list request")
-    symbols = get_data.get_stock_list()
-    print(symbols)
-    return jsonify({'stock_list': symbols})
+    data = get_data.get_stock_list()
+    logging.debug(data)
+    logging.debug(jsonify({'stock_list': data}))
+    return jsonify({'stock_list': data})
+
+@app.route("/advanced_data", methods=['POST'])
+def advanced_data():
+    input = request.json
+    data = get_data.get_advanced_data(input.get('ticker'))
+    logging.debug(jsonify({'data' : data}))
+    return jsonify({'data' : data})
 
 if __name__ == "__main__":
     app.run(debug=True)
