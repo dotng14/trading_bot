@@ -3,6 +3,8 @@ import CurrentTrading from './CurrentTrading';
 
 export interface Stock {
   name: string;
+  price: number;
+  day_change: number;
   isTrading?: boolean;
 }
 
@@ -29,6 +31,7 @@ const StockList: React.FC<StockListProps> = ({ stocks }) => {
           <li key={index}>
             <div>
               <strong>{stock.name}</strong> 
+              <p>Price: ${stock.price}</p>
             </div>
             <button onClick={() => alert(`More details about ${stock.name}`)}>More Detail</button>
             <button onClick={() => toggleTrading(index)}>

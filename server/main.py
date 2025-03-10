@@ -1,11 +1,16 @@
 from flask import Flask, request, jsonify
 from log_in import login_robinhood
-from log_in import handle_mfa
 import robin_stocks.robinhood as r
 import logging
 from flask_cors import CORS
+import get_data
+import time
+
 app = Flask(__name__)
 CORS(app)
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
 
 @app.route("/api")
 def api():
@@ -13,30 +18,35 @@ def api():
 
 @app.route('/login', methods=['POST'])
 def login():
+    logging.debug("Received login request")
 
     data = request.json
     username = data.get('username')
     password = data.get('password')
 
-    try:
-        login_data = login_robinhood(username, password)
-        challenge_id = r.get_current_challenge_id()
-        return jsonify({'success': True, 'message': 'Login successful', 'data': login_data, 'challenge_id': challenge_id})
-    except Exception as e:
-        return jsonify({'success': False, 'message': str(e)})
+    logging.debug(f"Username: {username}")
+    logging.debug(f"Password: {password}")
 
-@app.route('/auth', methods=['POST'])
-def auth():
+    if(login_robinhood(username, password)):
+        return jsonify({'success': True, 'message': 'Login successful'})
+    else:
+        return jsonify({'success': False, 'message': 'Login failed'})
+
+@app.route("/basic_data", methods=['POST'])
+def basic_data():
+    logging.debug("Received basic data request")
     data = request.json
-    username = data.get('username')
-    password = data.get('password')
-    challenge_id = data.get('challenge_id')
-    mfa = data.get('mfa')
+    ticker = data.get('name')
+    data = get_data.get_basic_data(ticker)
+    logging.debug(data)
+    return jsonify({'price': time.time(), 'day_change': data[1]})
 
-    try:
-        handle_mfa(username, password, challenge_id, mfa)
-        return jsonify({'success': True, 'message': 'MFA successful'})
-    except Exception as e:
-        return jsonify({'success': False, 'message': str(e)})
+@app.route("/stock_list", methods=['GET'])
+def stock_list():
+    logging.debug("Received stock list request")
+    symbols = get_data.get_stock_list()
+    print(symbols)
+    return jsonify({'stock_list': symbols})
+
 if __name__ == "__main__":
     app.run(debug=True)
