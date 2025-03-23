@@ -1,0 +1,51 @@
+.bot-account-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .bot-account-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .bot-account-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .bot-account-container form div {
+    margin-bottom: 15px;
+  }
+  
+  .bot-account-container label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .bot-account-container input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .bot-account-container button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .bot-account-container button:hover {
+    background-color: #0056b3;
+  }
+  
+  .bot-account-container p {
+    text-align: center;
+    margin-top: 20px;
+  }

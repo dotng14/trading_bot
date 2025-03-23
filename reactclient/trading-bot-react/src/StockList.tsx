@@ -10,7 +10,9 @@ async function GetStockList() {
     },
   });
   const data = await response.json();
-  const stocks: Stock[] = data.stock_list;
+  const stocks: Stock[] = data.stock_list.map((stock: Stock) =>
+  {return { ...stock, isTrading: false };}
+  );
   return stocks;
 }
 
@@ -24,6 +26,16 @@ async function GetAdvancedData(ticker: string): Promise<StockData> {
   });
   const data = await response.json();
   return data.data;
+}
+
+async function saveStock(stocks: Stock[]) {
+  await fetch('http://127.0.0.1:5000/save_stock', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({  stocks }),
+  });
 }
 
 export interface Stock {
@@ -61,6 +73,7 @@ class StockList extends React.Component<any, any, Stock[]> {
       i === index ? { ...stock, isTrading: !stock.isTrading } : stock
     );
     this.setState({ stocks: updatedStocks });
+    saveStock(updatedStocks);
     console.log(updatedStocks); // Log the updated state
   }
 
@@ -72,7 +85,7 @@ class StockList extends React.Component<any, any, Stock[]> {
       advancedData: null,
     };
     this.fetchStocks(); // Initial fetch
-    setInterval(() => this.fetchStocks(), 60000); // Fetch every 5 seconds
+    setInterval(() => this.fetchStocks(), 5000); // Fetch every 5 seconds
   }
 
   render() {

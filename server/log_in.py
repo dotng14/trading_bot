@@ -5,7 +5,7 @@ import sys
 
 def login_robinhood(USERNAME, PASSWORD):
     print(USERNAME + " " + PASSWORD)
-    login_data = r.login(USERNAME, PASSWORD, store_session=True)
+    login_data = r.login(USERNAME, PASSWORD, store_session=True, pickle_name='login_data.pkl') #modify to not remember login session
     return login_data
 
 
